@@ -231,3 +231,8 @@
 <!-- [ Main Content ] end -->
 
 @endsection
+
+@push("script")
+    <script src="../assets/js/plugins/apexcharts.min.js"></script>
+    <script src="../assets/js/pages/dashboard-analytics.js"></script>
+@endpush

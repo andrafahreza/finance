@@ -42,6 +42,9 @@
             </div>
 
             <ul class="pc-navbar">
+                <li class="pc-item pc-caption">
+                    <label>Pages</label>
+                </li>
                 <li class="pc-item @if ($title == 'home') active @endif">
                     <a href="{{ route('home') }}" class="pc-link">
                         <span class="pc-micon">
@@ -52,7 +55,30 @@
                         <span class="pc-mtext">Dashboard</span>
                     </a>
                 </li>
+                <li class="pc-item @if ($title == 'income') active @endif">
+                    <a href="{{ route('income') }}" class="pc-link">
+                        <span class="pc-micon">
+                            <svg class="pc-icon">
+                                <use xlink:href="#custom-dollar-square"></use>
+                            </svg>
+                        </span>
+                        <span class="pc-mtext">Income</span>
+                    </a>
+                </li>
+                <li class="pc-item @if ($title == 'transaction') active @endif">
+                    <a href="{{ route('transaction') }}" class="pc-link">
+                        <span class="pc-micon">
+                            <svg class="pc-icon">
+                                <use xlink:href="#custom-shapes"></use>
+                            </svg>
+                        </span>
+                        <span class="pc-mtext">Transaction</span>
+                    </a>
+                </li>
 
+                <li class="pc-item pc-caption">
+                    <label>Data</label>
+                </li>
             </ul>
         </div>
     </div>

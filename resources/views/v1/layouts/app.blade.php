@@ -27,6 +27,8 @@
     <!-- [Template CSS Files] -->
     <link rel="stylesheet" href="../assets/css/style.css" id="main-style-link" />
     <link rel="stylesheet" href="../assets/css/style-preset.css" />
+
+    @stack("styles")
     <script>
         window.dataLayer = window.dataLayer || [];
     </script>
@@ -55,10 +57,9 @@
 
     @include('v1.layouts.components.setting')
 
+    @stack("script")
     <!-- [Page Specific JS] start -->
-    <script src="../assets/js/plugins/apexcharts.min.js"></script>
-    <script src="../assets/js/pages/dashboard-analytics.js"></script>
-    <!-- [Page Specific JS] end -->
+
     <!-- Required Js -->
     <script src="../assets/js/plugins/popper.min.js"></script>
     <script src="../assets/js/plugins/simplebar.min.js"></script>
@@ -66,6 +67,7 @@
     <script src="../assets/js/fonts/custom-font.js"></script>
     <script src="../assets/js/pcoded.js"></script>
     <script src="../assets/js/plugins/feather.min.js"></script>
+
 
     <script>
         layout_change('light');
