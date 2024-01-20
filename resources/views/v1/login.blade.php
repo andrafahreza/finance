@@ -60,7 +60,7 @@
                             @endif
                             <h4 class="text-center f-w-500 mb-3">Login with your account</h4>
                             <div class="form-group mb-3">
-                                <input type="text" name="username" class="form-control" id="floatingInput" placeholder="Username">
+                                <input type="email" name="email" class="form-control" id="floatingInput" placeholder="email">
                             </div>
                             <div class="form-group mb-3">
                                 <input type="password" name="password" class="form-control" id="floatingInput1" placeholder="Password">

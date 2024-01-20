@@ -18,7 +18,7 @@ class AuthController extends Controller
     {
         try {
             $credentials = $request->validate([
-                "username" => 'required',
+                "email" => 'required',
                 "password" => 'required'
             ]);
 
@@ -27,7 +27,7 @@ class AuthController extends Controller
                 return redirect()->intended("home");
             }
 
-            throw new \Exception("Incorrect username or password");
+            throw new \Exception("Incorrect email or password");
 
         } catch (\Throwable $th) {
             return redirect()->back()->withErrors(['message' => $th->getMessage()]);

@@ -27,7 +27,8 @@ class UserFactory extends Factory
         return [
             'id' => Uuid::uuid4()->getHex(),
             'name' => fake()->name(),
-            'username' => fake()->unique()->name(),
+            'email' => fake()->unique()->email(),
+            'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'role' => "admin"
         ];

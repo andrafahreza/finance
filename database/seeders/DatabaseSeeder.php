@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::factory()->create([
             'id' => Uuid::uuid4()->getHex(),
             'name' => 'Mhd Andra Fahreza',
-            'username' => 'andra',
+            'email' => 'andrafahreza818@gmail.com',
+            'email_verified_at' => now(),
             'password' => Hash::make("password"),
             'role' => 'admin'
         ]);
@@ -27,7 +28,8 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::factory()->create([
             'id' => Uuid::uuid4()->getHex(),
             'name' => 'Pratiwi Kurnia Putri',
-            'username' => 'putri',
+            'email' => 'putripratiwi1305@gmail.com',
+            'email_verified_at' => now(),
             'password' => Hash::make("password"),
             'role' => 'sub_admin'
         ]);
