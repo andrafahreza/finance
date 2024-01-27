@@ -55,7 +55,7 @@
                         <span class="pc-mtext">Dashboard</span>
                     </a>
                 </li>
-                <li class="pc-item pc-hasmenu @if ($title == 'income') active @endif">
+                <li class="pc-item pc-hasmenu @if ($title == 'income' || $title == 'source') active @endif">
                     <a href="#!" class="pc-link">
                         <span class="pc-micon">
                             <svg class="pc-icon">
@@ -66,7 +66,7 @@
                         <span class="pc-arrow"><i data-feather="chevron-right"></i></span>
                     </a>
                     <ul class="pc-submenu">
-                        <li class="pc-item"><a class="pc-link" href="../dashboard/index.html">Sumber Dana</a></li>
+                        <li class="pc-item"><a class="pc-link" href="{{ route('source') }}">Sumber Dana</a></li>
                         <li class="pc-item"><a class="pc-link" href="{{ route('income') }}">Data Pemasukan</a></li>
                     </ul>
                 </li>

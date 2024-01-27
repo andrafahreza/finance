@@ -9,8 +9,6 @@ class Source extends Model
 {
     use HasFactory;
 
-    use HasFactory;
-
     protected $table     = 'source';
     public $primaryKey   = 'id';
     protected $keyType   = 'string';
