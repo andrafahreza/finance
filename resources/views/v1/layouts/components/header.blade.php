@@ -121,7 +121,7 @@
                                         <div class="d-flex align-items-center justify-content-between">
                                             <div>
                                                 <p class="mb-0 text-white text-opacity-75">Available Balance</p>
-                                                <h4 class="mb-0 text-white">Rp. </h4>
+                                                <h4 class="mb-0 text-white">Rp. {{ number_format(Auth::user()->balance) }}</h4>
                                             </div>
                                             <div class="avtar">
                                                 <i class="ti ti-arrows-left-right f-18"></i>

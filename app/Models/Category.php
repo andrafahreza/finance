@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Source extends Model
+class Category extends Model
 {
     use HasFactory;
 
-    protected $table     = 'source';
+    protected $table     = 'category';
     public $primaryKey   = 'id';
     protected $keyType   = 'string';
     public $incrementing = false;
@@ -17,15 +17,10 @@ class Source extends Model
     protected $fillable = [
         'id',
         'id_user',
-        'name',
+        'name'
     ];
 
     public function user(){
         return $this->belongsTo(User::class, "id_user");
-    }
-
-    public function income()
-    {
-        return $this->hasMany(Income::class, "id_source");
     }
 }

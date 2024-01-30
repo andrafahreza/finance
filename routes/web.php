@@ -26,6 +26,10 @@ Route::middleware('auth')->group(function() {
         });
 
         Route::get('/', [IncomeController::class, 'index'])->name('income');
+        Route::get('save/{id?}', [IncomeController::class, 'getData'])->name('income-get');
+        Route::post('save/{id?}', [IncomeController::class, 'save'])->name('income-save');
+        Route::post('list', [IncomeController::class, 'list'])->name('income-list');
+        Route::get('delete/{id?}', [IncomeController::class, 'delete'])->name('income-delete');
     });
 
     Route::prefix("transaction")->group(function() {

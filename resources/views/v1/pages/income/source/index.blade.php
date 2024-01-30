@@ -51,7 +51,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalAdd">Tambah data pemasukan</h5>
+                    <h5 class="modal-title" id="modalAdd">Tambah data Sumber Dana</h5>
                 </div>
                 <form method="POST" action="{{ route('source-save') }}" id="formAdd">
                     @csrf
