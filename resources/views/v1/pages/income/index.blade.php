@@ -20,7 +20,8 @@
 
             <div class="row">
                 <div class="col-xl-12 col-md-12">
-                    <button type="button" class="btn btn-primary m-b-20" data-bs-toggle="modal" data-bs-target="#add" id="btnAdd">+ Tambah</button>
+                    <button type="button" class="btn btn-primary m-b-20" data-bs-toggle="modal" data-bs-target="#add"
+                        id="btnAdd">+ Tambah</button>
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex flex-sm-row flex-column align-items-center justify-content-between mb-3">
@@ -127,7 +128,7 @@
                         <div class="form-group row">
                             <label class="col-lg-4 col-form-label text-lg-end">Jumlah Pemasukan</label>
                             <div class="col-lg-6">
-                                <input type="number" class="form-control" name="value" id="value">
+                                <input type="text" class="form-control" name="value" id="value">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -204,7 +205,7 @@
             responsive: true,
             processing: true,
             serverSide: true,
-            responsive:true,
+            responsive: true,
             ajax: {
                 url: "{{ route('income-list') }}",
                 method: "post",
@@ -219,6 +220,17 @@
                     $(td).attr('nowrap', true);
                 }
             }]
+        });
+
+        $("#value").on('keyup', function(evt) {
+            if (evt.which != 110) { //not a fullstop
+                var n = parseFloat($(this).val().replace(/\,/g, ''), 10);
+                if (isNaN(n)) {
+                    $(this).val(0);
+                } else {
+                    $(this).val(n.toLocaleString());
+                }
+            }
         });
 
         $('#btnAdd').click(function() {
@@ -258,6 +270,8 @@
 
                     getResponse(title, response.message, icon);
                     table.ajax.reload(null, false);
+
+                    $('#balanceUser').html("Rp. " + response.balance);
                 },
                 error: function(response) {
                     getResponse("Error !", response.message, "danger");
@@ -323,6 +337,18 @@
                 if (result.value) {
                     getResponse("Berhasil", "Berhasil menghapus data", "success");
                     table.ajax.reload(null, false);
+
+                    $.ajax({
+                        type: "get",
+                        url: "{{ route('count-balance') }}",
+                        dataType: "JSON",
+                        success: function(response) {
+                            $('#balanceUser').html(response.balance);
+                        },
+                        error: function(response) {
+                            getresponse("Error !", response.message, "danger");
+                        }
+                    });
                 }
             })
         }

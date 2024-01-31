@@ -5,6 +5,7 @@ namespace App\Http\Controllers\web\v1;
 use App\Http\Controllers\Controller;
 use App\Models\Income;
 use App\Models\Source;
+use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,10 +37,10 @@ class IncomeController extends Controller
             })
             ->editColumn("income", function ($data) {
                 $html = "";
-                $html .= '<span class="text-end">Rp. '.number_format($data->value).'</span>';
+                $html .= '<div class="text-end">Rp. '.number_format($data->value);
                 $html .= '<small class="text-success f-w-400">
                             <i class="ti ti-arrow-up"></i>
-                        </small>';
+                        </small> </div>';
 
                 return $html;
             })
@@ -70,17 +71,24 @@ class IncomeController extends Controller
         DB::beginTransaction();
 
         try {
+            $user = User::find(Auth::user()->id);
+
             if ($id == null) {
                 $id = Uuid::uuid4()->getHex();
             }
+
+            $replaceValue = str_replace(',','',$request->value);
+            $value = (int)str_replace('.','',$replaceValue);
 
             $set = [
                 "id" => $id,
                 "id_user" => Auth::user()->id,
                 "id_source" => $request->id_source,
-                "value" => $request->value,
+                "value" => $value,
                 "note" => $request->note,
             ];
+
+            $countBalance = $user->balance + $value;
 
             $detect = Income::find($id);
             if (!$detect) {
@@ -90,16 +98,18 @@ class IncomeController extends Controller
                 }
 
             } else {
+
                 unset($set["id"]);
                 if (!$detect->update($set)) {
                     throw new \Exception("Gagal memperbarui data");
                 }
+
+                $checkIncome = Income::where('id_user', Auth::user()->id)->sum('value');
+                $checkTransaction = Transaction::where('id_user', Auth::user()->id)->sum('value');
+                $countBalance = ($checkIncome - $checkTransaction);
             }
 
-            $cekIincome = Income::where('id_user', Auth::user()->id)->sum('value');
-
-            $user = User::find(Auth::user()->id);
-            $user->balance = $user->balance + $request->value;
+            $user->balance = $countBalance;
 
             if (!$user->update()) {
                 throw new \Exception("Terjadi kesalahan dalam menambah balance");
@@ -109,7 +119,8 @@ class IncomeController extends Controller
 
             return response()->json([
                 'alert' => 1,
-                'message' => "Data berhasil di update"
+                'message' => "Data berhasil di update",
+                'balance' => number_format($countBalance)
             ]);
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -148,14 +159,23 @@ class IncomeController extends Controller
             abort(404);
         }
 
+        DB::beginTransaction();
+
         try {
-            if (!$data->delete()) {
+            $user = User::find(Auth::user()->id);
+            $balance = $user->balance - $data->value;
+            $user->balance = $balance;
+
+            if (!$data->delete() || !$user->update()) {
                 throw new \Exception("Gagal menghapus data");
             }
 
+            DB::commit();
+
             return response()->json([
                 'alert' => 1,
-                'message' => "Berhasil menghapus data"
+                'message' => "Berhasil menghapus data",
+                'balance' => $balance
             ]);
         } catch (\Throwable $th) {
             $message = $th->getMessage();

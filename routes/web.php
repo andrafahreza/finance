@@ -13,6 +13,7 @@ Route::post("/", [AuthController::class, 'auth'])->name('authenticate');
 Route::middleware('auth')->group(function() {
     Route::get("logout", [AuthController::class, 'logout'])->name('logout');
     Route::get("home", [HomeController::class, 'index'])->name('home');
+    Route::get("count-balance", [HomeController::class, 'balance'])->name('count-balance');
 
     Route::prefix("income")->group(function() {
 
