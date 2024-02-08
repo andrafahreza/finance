@@ -19,7 +19,7 @@ class IncomeController extends Controller
     {
         $month = $this->month();
         $title = "income";
-        $source = Source::get();
+        $source = Source::where('id_user', Auth::user()->id)->get();
 
         return view('v1.pages.income.index', compact(["month", "title", "source"]));
     }
@@ -40,12 +40,17 @@ class IncomeController extends Controller
                     $query->where('id_source', $request->source);
                 }
             })
+            ->where('id_user', Auth::user()->id)
             ->latest()
             ->get();
 
         return DataTables::of($data)
             ->editColumn("source", function ($data) {
-                return '<span class="text-truncate w-100">'.$data->source->name."</span>";
+                if ($data->source) {
+                    return '<span class="text-truncate w-100">'.$data->source->name."</span>";
+                }
+
+                return "Transfer";
             })
             ->editColumn("note", function ($data) {
                 return '<span class="badge bg-success">'.$data->note.'</span>';
@@ -65,15 +70,19 @@ class IncomeController extends Controller
             ->editColumn("action", function ($data) {
                 $urlEdit = route("income-get", ["id" => $data->id]);
                 $urlDelete = route("income-delete", ["id" => $data->id]);
-                $html = '<button class="btn btn-icon btn-outline-primary m-1"
-                    data-bs-toggle="tooltip" data-bs-placement="top"
-                    data-bs-original-title="Edit" onclick="edit(\''.$urlEdit.'\')">
-                    <i class="ti ti-pencil"></i>
-                </button>
-                <button class="btn btn-icon btn-outline-danger m-1" data-bs-toggle="tooltip"
-                    data-bs-placement="top" data-bs-original-title="Delete" onclick="hapus(\''.$urlDelete.'\')">
-                    <i class="ti ti-trash"></i>
-                </button>';
+                $html = "";
+
+                if ($data->source) {
+                    $html .= '<button class="btn btn-icon btn-outline-primary m-1"
+                        data-bs-toggle="tooltip" data-bs-placement="top"
+                        data-bs-original-title="Edit" onclick="edit(\''.$urlEdit.'\')">
+                        <i class="ti ti-pencil"></i>
+                    </button>
+                    <button class="btn btn-icon btn-outline-danger m-1" data-bs-toggle="tooltip"
+                        data-bs-placement="top" data-bs-original-title="Delete" onclick="hapus(\''.$urlDelete.'\')">
+                        <i class="ti ti-trash"></i>
+                    </button>';
+                }
 
                 return $html;
             })

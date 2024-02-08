@@ -26,7 +26,7 @@
 
 
         <!-- [ Main Content ] start -->
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-md-6 col-xxl-3">
                 <div class="card">
                     <div class="card-body">
@@ -224,7 +224,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- [ Main Content ] end -->
     </div>
 </div>

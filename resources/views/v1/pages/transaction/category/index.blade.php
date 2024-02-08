@@ -23,7 +23,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex align-items-center justify-content-between mb-3">
-                                <h5 class="mb-0">Data Sumber Dana</h5>
+                                <h5 class="mb-0">Data Kategori</h5>
                                 <div class="button-filter d-flex">
                                     <button type="button" class="btn btn-primary m-b-20" data-bs-toggle="modal"
                                         data-bs-target="#add" id="btnAdd">+ Tambah</button>

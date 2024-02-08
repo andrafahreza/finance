@@ -21,7 +21,7 @@ class SourceController extends Controller
 
     public function list()
     {
-        $data = Source::latest()->get();
+        $data = Source::where('id_user', Auth::user()->id)->latest()->get();
 
         return DataTables::of($data)
             ->editColumn("name", function ($data) {

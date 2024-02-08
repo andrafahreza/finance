@@ -21,7 +21,7 @@ class CategoryController extends Controller
 
     public function list()
     {
-        $data = Category::latest()->get();
+        $data = Category::where('id_user', Auth::user()->id)->latest()->get();
 
         return DataTables::of($data)
             ->editColumn("name", function ($data) {

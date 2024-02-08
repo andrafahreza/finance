@@ -19,7 +19,7 @@ class TransactionController extends Controller
     {
         $month = $this->month();
         $title = "transaction";
-        $category = Category::get();
+        $category = Category::where('id_user', Auth::user()->id)->get();
         $subAdmin = User::where('role', 'sub_admin')->get();
 
         return view('v1.pages.transaction.index', compact(["month", "title", "category", "subAdmin"]));
@@ -41,6 +41,7 @@ class TransactionController extends Controller
                     $query->where('id_category', $request->category);
                 }
             })
+            ->where('id_user', Auth::user()->id)
             ->latest()
             ->get();
 
