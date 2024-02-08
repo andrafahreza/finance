@@ -66,23 +66,24 @@
                         <span class="pc-arrow"><i data-feather="chevron-right"></i></span>
                     </a>
                     <ul class="pc-submenu">
-                        <li class="pc-item"><a class="pc-link" href="{{ route('source') }}">Sumber Dana</a></li>
+                        <li class="pc-item"><a class="pc-link" href="{{ route('source') }}">Data Sumber Dana</a></li>
                         <li class="pc-item"><a class="pc-link" href="{{ route('income') }}">Data Pemasukan</a></li>
                     </ul>
                 </li>
-                <li class="pc-item @if ($title == 'transaction') active @endif">
-                    <a href="{{ route('transaction') }}" class="pc-link">
+                <li class="pc-item pc-hasmenu @if ($title == 'transaction' || $title == 'category') active @endif">
+                    <a href="#!" class="pc-link">
                         <span class="pc-micon">
                             <svg class="pc-icon">
                                 <use xlink:href="#custom-shapes"></use>
                             </svg>
                         </span>
-                        <span class="pc-mtext">Transaction</span>
+                        <span class="pc-mtext">Pengeluaran</span>
+                        <span class="pc-arrow"><i data-feather="chevron-right"></i></span>
                     </a>
-                </li>
-
-                <li class="pc-item pc-caption">
-                    <label>Data</label>
+                    <ul class="pc-submenu">
+                        <li class="pc-item"><a class="pc-link" href="{{ route('category') }}">Data Kategori</a></li>
+                        <li class="pc-item"><a class="pc-link" href="{{ route('transaction') }}">Data Pengeluaran</a></li>
+                    </ul>
                 </li>
             </ul>
         </div>

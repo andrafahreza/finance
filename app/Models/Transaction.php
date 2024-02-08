@@ -21,6 +21,8 @@ class Transaction extends Model
         'id_category',
         'value',
         'note',
+        'date',
+        'id_income',
     ];
 
     public function user(){
@@ -33,5 +35,9 @@ class Transaction extends Model
 
     public function category(){
         return $this->belongsTo(Category::class, "id_category");
+    }
+
+    public function income(){
+        return $this->belongsTo(Income::class, "id_income");
     }
 }

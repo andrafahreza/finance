@@ -20,6 +20,7 @@ class Income extends Model
         'id_source',
         'value',
         'note',
+        'date',
     ];
 
     public function user(){

@@ -9,8 +9,8 @@
                     <div class="row align-items-center">
                         <div class="col-md-12">
                             <ul class="breadcrumb mb-3">
-                                <li class="breadcrumb-item">Pemasukan</li>
-                                <li class="breadcrumb-item" aria-current="page">Data Pemasukan</li>
+                                <li class="breadcrumb-item">Pengeluaran</li>
+                                <li class="breadcrumb-item" aria-current="page">Kategori</li>
                             </ul>
                         </div>
                     </div>
@@ -20,48 +20,20 @@
 
             <div class="row">
                 <div class="col-xl-12 col-md-12">
-                    <button type="button" class="btn btn-primary m-b-20" data-bs-toggle="modal" data-bs-target="#add"
-                        id="btnAdd">+ Tambah</button>
                     <div class="card">
                         <div class="card-body">
-                            <div class="d-flex flex-sm-row flex-column align-items-center justify-content-between mb-3">
-                                <h5 class="mb-0">Data Pemasukan</h5>
-                                <div class="button-filter d-flex flex-sm-row flex-column">
-                                    <div class="row">
-                                        <select class="form-select w-auto m-2" id="filterMonth">
-                                            @foreach ($month as $key => $item)
-                                                <option value="{{ $key + 1 }}"
-                                                    @if (date('m') == $key + 1) selected @endif>{{ $item }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        <select class="form-select w-auto m-2" id="filterYear">
-                                            <option value="2024" @if (date('m') == 2024) selected @endif>2024
-                                            </option>
-                                            <option value="2025" @if (date('m') == 2025) selected @endif>2025
-                                            </option>
-                                            <option value="2026" @if (date('m') == 2026) selected @endif>2026
-                                            </option>
-                                            <option value="2027" @if (date('m') == 2027) selected @endif>2027
-                                            </option>
-                                        </select>
-                                    </div>
-                                    <select class="form-select w-auto m-2" id="filterSource">
-                                        <option value="all">Semua </option>
-                                        @foreach ($source as $item)
-                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <h5 class="mb-0">Data Sumber Dana</h5>
+                                <div class="button-filter d-flex">
+                                    <button type="button" class="btn btn-primary m-b-20" data-bs-toggle="modal"
+                                        data-bs-target="#add" id="btnAdd">+ Tambah</button>
                                 </div>
                             </div>
                             <div class="table-responsive">
-                                <table class="table table-hover" id="table">
+                                <table class="table table-hover" id="table" style="width: 100%">
                                     <thead>
                                         <tr>
-                                            <th>Pemasukan</th>
-                                            <th>Catatan</th>
-                                            <th class="text-end">Jumlah</th>
-                                            <th>Tanggal</th>
+                                            <th>Nama Kategori</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -79,38 +51,15 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalAdd">Tambah data pemasukan</h5>
+                    <h5 class="modal-title" id="modalAdd">Tambah Data Kategori</h5>
                 </div>
-                <form method="POST" action="{{ route('source-save') }}" id="formAdd">
+                <form method="POST" action="{{ route('category-save') }}" id="formAdd">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group row">
-                            <label class="col-lg-4 col-form-label text-lg-end">Pemasukan</label>
+                            <label class="col-lg-4 col-form-label text-lg-end">Kategori</label>
                             <div class="col-lg-6">
-                                <select class="form-control" name="id_source" id="id_source" required>
-                                    <option value="">Pilih Pemasukan</option>
-                                    @foreach ($source as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-lg-4 col-form-label text-lg-end">Jumlah Pemasukan</label>
-                            <div class="col-lg-6">
-                                <input type="text" class="form-control" name="value" id="value">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-lg-4 col-form-label text-lg-end">Tanggal</label>
-                            <div class="col-lg-6">
-                                <input type="datetime-local" class="form-control" name="date" id="date">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-lg-4 col-form-label text-lg-end">Catatan</label>
-                            <div class="col-lg-6">
-                                <textarea class="form-control" name="note" id="note" required></textarea>
+                                <input type="text" name="name" id="category" class="form-control" required>
                             </div>
                         </div>
                     </div>
@@ -146,23 +95,10 @@
     <script>
         var table;
 
-        let column_table = [{
-                data: 'source',
-                name: 'source',
-                searchable: false
-            },
+        let column_table = [
             {
-                data: 'note',
-                name: 'note',
-                orderable: false,
-            },
-            {
-                data: 'income',
-                name: 'income'
-            },
-            {
-                data: 'date',
-                name: 'date'
+                data: 'name',
+                name: 'name'
             },
             {
                 data: 'action',
@@ -177,15 +113,11 @@
             responsive: true,
             processing: true,
             serverSide: true,
-            responsive: true,
             ajax: {
-                url: "{{ route('income-list') }}",
+                url: "{{ route('category-list') }}",
                 method: "post",
                 data: function(d) {
                     d._token = $('meta[name="csrf-token"]').attr('content');
-                    d.month = $('#filterMonth').val();
-                    d.year = $('#filterYear').val();
-                    d.source = $('#filterSource').val();
                 }
             },
             columns: column_table,
@@ -197,20 +129,9 @@
             }]
         });
 
-        $("#value").on('keyup', function(evt) {
-            if (evt.which != 110) { //not a fullstop
-                var n = parseFloat($(this).val().replace(/\,/g, ''), 10);
-                if (isNaN(n)) {
-                    $(this).val(0);
-                } else {
-                    $(this).val(n.toLocaleString());
-                }
-            }
-        });
-
         $('#btnAdd').click(function() {
             $("#formAdd")[0].reset();
-            $("#formAdd").attr("action", "{{ route('income-save') }}");
+            $("#formAdd").attr("action", "{{ route('category-save') }}");
         });
 
         $('#formAdd').submit(function(e) {
@@ -243,8 +164,6 @@
 
                     getResponse(title, response.message, icon);
                     table.ajax.reload(null, false);
-
-                    $('#balanceUser').html("Rp. " + response.balance);
                 },
                 error: function(response) {
                     getResponse("Error !", response.message, "danger");
@@ -261,13 +180,12 @@
                     if (response.alert == '1') {
                         $('#add').modal('toggle');
 
+                        console.log(response);
+
                         const data = response.data;
                         $('#formAdd')[0].reset();
-                        $('#formAdd').attr("action", "{{ route('income-save') }}" + "/" + data.id);
-                        $('#id_source').val(data.id_source).change();
-                        $('#value').val(data.value);
-                        $('#date').val(data.created_at);
-                        $('#note').val(data.note);
+                        $('#formAdd').attr("action", "{{ route('category-save') }}" + "/" + data.id);
+                        $('#category').val(data.name);
                     } else {
                         getresponse("Error !", response.message, "danger");
                     }
@@ -308,24 +226,8 @@
                 if (result.value) {
                     getResponse("Berhasil", "Berhasil menghapus data", "success");
                     table.ajax.reload(null, false);
-
-                    $.ajax({
-                        type: "get",
-                        url: "{{ route('count-balance') }}",
-                        dataType: "JSON",
-                        success: function(response) {
-                            $('#balanceUser').html(response.balance);
-                        },
-                        error: function(response) {
-                            getresponse("Error !", response.message, "danger");
-                        }
-                    });
                 }
             })
         }
-
-        $('#filterMonth, #filterYear, #filterSource').on('change', function() {
-            table.ajax.reload();
-        });
     </script>
 @endpush

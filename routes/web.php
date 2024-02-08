@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\web\v1\AuthController;
+use App\Http\Controllers\web\v1\CategoryController;
 use App\Http\Controllers\web\v1\HomeController;
 use App\Http\Controllers\web\v1\IncomeController;
 use App\Http\Controllers\web\v1\SourceController;
@@ -34,6 +35,20 @@ Route::middleware('auth')->group(function() {
     });
 
     Route::prefix("transaction")->group(function() {
+
+        // kategori
+        Route::prefix("category")->group(function() {
+            Route::get('/', [CategoryController::class, 'index'])->name('category');
+            Route::get('save/{id?}', [CategoryController::class, 'getData'])->name('category-get');
+            Route::post('save/{id?}', [CategoryController::class, 'save'])->name('category-save');
+            Route::post('list', [CategoryController::class, 'list'])->name('category-list');
+            Route::get('delete/{id?}', [CategoryController::class, 'delete'])->name('category-delete');
+        });
+
         Route::get('/', [TransactionController::class, 'index'])->name('transaction');
+        Route::get('save/{id?}', [TransactionController::class, 'getData'])->name('transaction-get');
+        Route::post('save/{id?}', [TransactionController::class, 'save'])->name('transaction-save');
+        Route::post('list', [TransactionController::class, 'list'])->name('transaction-list');
+        Route::get('delete/{id?}', [TransactionController::class, 'delete'])->name('transaction-delete');
     });
 });

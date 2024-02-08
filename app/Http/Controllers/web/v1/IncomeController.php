@@ -24,9 +24,24 @@ class IncomeController extends Controller
         return view('v1.pages.income.index', compact(["month", "title", "source"]));
     }
 
-    public function list()
+    public function list(Request $request)
     {
-        $data = Income::with('source')->latest()->get();
+        $data = Income::with('source')
+            ->where(function($query) use($request) {
+                $year = $request->year != null ? $request->year : date('Y');
+                $query->whereYear('date', $year);
+            })
+            ->where(function($query) use($request) {
+                $month = $request->month != null ? $request->month : date('m');
+                $query->whereMonth('date', $month);
+            })
+            ->where(function($query) use($request) {
+                if ($request->source && $request->source != "all") {
+                    $query->where('id_source', $request->source);
+                }
+            })
+            ->latest()
+            ->get();
 
         return DataTables::of($data)
             ->editColumn("source", function ($data) {
@@ -37,7 +52,7 @@ class IncomeController extends Controller
             })
             ->editColumn("income", function ($data) {
                 $html = "";
-                $html .= '<div class="text-end">Rp. '.number_format($data->value);
+                $html .= '<div class="text-end text-success">Rp. '.number_format($data->value);
                 $html .= '<small class="text-success f-w-400">
                             <i class="ti ti-arrow-up"></i>
                         </small> </div>';
@@ -45,7 +60,7 @@ class IncomeController extends Controller
                 return $html;
             })
             ->editColumn("date", function($data) {
-                return date('d-m-Y H:i:s', strtotime($data->created_at));
+                return date('d-m-Y H:i', strtotime($data->date));
             })
             ->editColumn("action", function ($data) {
                 $urlEdit = route("income-get", ["id" => $data->id]);
@@ -86,6 +101,7 @@ class IncomeController extends Controller
                 "id_source" => $request->id_source,
                 "value" => $value,
                 "note" => $request->note,
+                "date" => $request->date,
             ];
 
             $countBalance = $user->balance + $value;
@@ -93,13 +109,14 @@ class IncomeController extends Controller
             $detect = Income::find($id);
             if (!$detect) {
                 $detect = Income::create($set);
+
                 if (!$detect->save()) {
                     throw new \Exception("Gagal menambah data");
                 }
 
             } else {
-
                 unset($set["id"]);
+
                 if (!$detect->update($set)) {
                     throw new \Exception("Gagal memperbarui data");
                 }
