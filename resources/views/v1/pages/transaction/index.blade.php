@@ -111,7 +111,7 @@
                         <div class="form-group row">
                             <label class="col-lg-4 col-form-label text-lg-end">Jumlah Pengeluaran <span class="text-danger">*</span></label>
                             <div class="col-lg-6">
-                                <input type="text" class="form-control" name="value" id="value">
+                                <input type="number" class="form-control" name="value" id="value">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -208,17 +208,6 @@
                     $(td).attr('nowrap', true);
                 }
             }]
-        });
-
-        $("#value").on('keyup', function(evt) {
-            if (evt.which != 110) { //not a fullstop
-                var n = parseFloat($(this).val().replace(/\,/g, ''), 10);
-                if (isNaN(n)) {
-                    $(this).val(0);
-                } else {
-                    $(this).val(n.toLocaleString());
-                }
-            }
         });
 
         $('#btnAdd').click(function() {
