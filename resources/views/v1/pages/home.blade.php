@@ -33,7 +33,7 @@
                         <div class="row align-items-center">
                             <div class="col-9">
                                 <h6 class="mb-2 f-w-400 text-muted">Total Pemasukan Bulan Ini</h6>
-                                <h4 class="mb-3">{{ $data['income']['total'] }} <span class="badge bg-light-success border border-success"><i class="ti ti-trending-up"></i> {{ $data['income']['percentage'] }}%</span></h4>
+                                <h4 class="mb-3">Rp. {{ number_format($data['income']['total']) }} <span class="badge bg-light-success border border-success"><i class="ti ti-trending-up"></i> {{ round($data['income']['percentage'], 1) }}%</span></h4>
                                 <p class="mb-0 text-muted text-sm">Kamu mendapatkan <span class="text-success">{{ $data['income']['comparePast'] }}</span> lebih bulan ini</p>
                             </div>
                             <div class="col-3 text-end">
@@ -50,7 +50,7 @@
                             <div class="col-9">
                                 <h6 class="mb-2 f-w-400 text-muted">Total Pengeluaran Bulan Ini</h6>
                                 <h4 class="mb-3">{{ $data['transaction']['total'] }} <span class="badge bg-light-primary border border-primary"> {{ $data['transaction']['comparePast'] }}%</span></h4>
-                                <p class="mb-0 text-muted text-sm">Kamu menghemat <span class="text-success">{{ $data['transaction']['percentage'] }}</span> bulan ini</p>
+                                <p class="mb-0 text-muted text-sm">Kamu menghemat <span class="text-success">{{ round($data['transaction']['percentage'], 1) }}</span> bulan ini</p>
                             </div>
                             <div class="col-3 text-end">
                                 <i class="ti ti-trending-up text-danger f-36"></i>
@@ -65,7 +65,7 @@
                         <div class="row align-items-center">
                             <div class="col-9">
                                 <h6 class="mb-2 f-w-400 text-muted">Pengeluaran Terbesar Bulan Ini</h6>
-                                <h4 class="mb-3">Rp. {{ $data['biggestTransaction'] != null ? number_format($data['biggestTransaction']->value) : 0 }}</h4>
+                                <h4 class="mb-3 text-danger">Rp. {{ $data['biggestTransaction'] != null ? number_format($data['biggestTransaction']->value) : 0 }}</h4>
                                 <p class="mb-0 text-muted text-sm">Pengeluaran terbsear kamu dibulan ini adalah {{ $data['biggestTransaction'] != null ? $data['biggestTransaction']->note : "-" }}</p>
                             </div>
                             <div class="col-3 text-end">
@@ -123,53 +123,29 @@
                 <div class="card">
                     <div class="card-body pb-0">
                         <div class="d-flex align-items-center justify-content-between mb-3">
-                            <h5 class="mb-0">Payment History</h5>
+                            <h5 class="mb-0">History Pengeluaran</h5>
                         </div>
                     </div>
                     <ul class="list-group list-group-flush border-top-0">
-                        <li class="list-group-item">
-                            <div class="d-flex align-items-center">
-                                <div class="flex-shrink-0">
-                                    <div class="avtar avtar-s bg-light-secondary">
-                                        <i class="fas fa-caret-up text-danger f-24"></i>
+                        @foreach ($data['historyPayment'] as $item)
+                            <li class="list-group-item">
+                                <div class="d-flex align-items-center">
+                                    <div class="flex-shrink-0">
+                                        <div class="avtar avtar-s bg-light-secondary">
+                                            <i class="fas fa-caret-up text-danger f-24"></i>
+                                        </div>
+                                    </div>
+                                    <div class="flex-grow-1 mx-2">
+                                        <p class="mb-1">{{ $item->note }}</p>
+                                        <h6 class="mb-0">- Rp. {{ number_format($item->value) }}<small class="text-danger"> - {{ round($item->value / $data['income']['total'] * 100, 1) }}%</small></h6>
                                     </div>
                                 </div>
-                                <div class="flex-grow-1 mx-2">
-                                    <p class="mb-1">Beli bakso</p>
-                                    <h6 class="mb-0">-210,000 <small class="text-danger">- 6%</small></h6>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div class="d-flex align-items-center">
-                                <div class="flex-shrink-0">
-                                    <div class="avtar avtar-s bg-light-secondary">
-                                        <i class="fas fa-caret-up text-danger f-24"></i>
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1 mx-2">
-                                    <p class="mb-1">Beli bakso</p>
-                                    <h6 class="mb-0">-210,000 <small class="text-danger">- 6%</small></h6>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div class="d-flex align-items-center">
-                                <div class="flex-shrink-0">
-                                    <div class="avtar avtar-s bg-light-secondary">
-                                        <i class="fas fa-caret-up text-danger f-24"></i>
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1 mx-2">
-                                    <p class="mb-1">Beli bakso</p>
-                                    <h6 class="mb-0">-210,000 <small class="text-danger">- 6%</small></h6>
-                                </div>
-                            </div>
-                        </li>
+                            </li>
+                        @endforeach
                     </ul>
                     <div class="card-footer">
                         <div class="d-grid">
-                            <button class="btn btn-outline-secondary">View all</button>
+                            <a href="{{ route('transaction') }}" class="btn btn-outline-secondary">lihat selengkapnya</a>
                         </div>
                     </div>
                 </div>

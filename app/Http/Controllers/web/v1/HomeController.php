@@ -25,13 +25,14 @@ class HomeController extends Controller
         }
 
         $income = [
-            "total" => "Rp. ". number_format($getIncome),
+            "total" => $getIncome,
             "comparePast" => "Rp. ". number_format($getCompareIncome),
-            "percentage" => $getCompareIncome != 0 ? ($getCompareIncome) / ($getIncome) * 1 : 0
+            "percentage" => $getCompareIncome != 0 ? ($getCompareIncome) / ($getIncome) * 100 : 0
         ];
 
         // ===================== Transaction ==============
         $dataTransaction = Transaction::where('id_user', $user->id)->whereMonth('date', date('m'));
+
 
         $getTransaction = $dataTransaction->sum('value');
         $getTransactionPast = Transaction::where('id_user', $user->id)->whereMonth('date', (date('m') - 1))->sum('value');
@@ -46,15 +47,17 @@ class HomeController extends Controller
         $transaction = [
             "total" => "Rp. ". number_format($getTransaction),
             "comparePast" => "Rp. ". number_format($getCompareTransaction),
-            "percentage" => $getCompareTransaction != 0 ? ($getCompareTransaction) / ($getTransaction) * 1 : 0
+            "percentage" => $getCompareTransaction != 0 ? ($getCompareTransaction) / ($getTransaction) * 100 : 0
         ];
 
-
+        // ========== Payment History ==================
+        $historyPayment = Transaction::where('id_user', $user->id)->whereMonth('date', date('m'))->orderBy('date', 'desc')->limit(3)->get();
 
         $data = [
             "income" => $income,
             "transaction" => $transaction,
-            "biggestTransaction" => $biggestTransaction
+            "biggestTransaction" => $biggestTransaction,
+            "historyPayment" => $historyPayment
         ];
 
 
