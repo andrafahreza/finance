@@ -66,7 +66,7 @@
                             <div class="col-9">
                                 <h6 class="mb-2 f-w-400 text-muted">Pengeluaran Terbesar Bulan Ini</h6>
                                 <h4 class="mb-3">Rp. {{ number_format($data['biggestTransaction']->value) }}</h4>
-                                <p class="mb-0 text-muted text-sm">Pengeluaran terbsear kamu dibulan ini adalah {{ $data['biggestTransaction']->note }}</p>
+                                <p class="mb-0 text-muted text-sm">Pengeluaran terbsear kamu dibulan ini adalah {{ $data['biggestTransaction'] != null ? $data['biggestTransaction']->note : "-" }}</p>
                             </div>
                             <div class="col-3 text-end">
                                 <i class="ti ti-chart-bar text-primary f-36"></i>
