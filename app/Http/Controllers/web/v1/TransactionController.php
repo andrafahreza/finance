@@ -47,10 +47,10 @@ class TransactionController extends Controller
 
         return DataTables::of($data)
             ->editColumn("category", function ($data) {
-                return '<span class="text-truncate w-100">'.$data->category->name."</span>";
+                return '<span class="badge bg-success">'.$data->category->name."</span>";
             })
             ->editColumn("note", function ($data) {
-                return '<span class="badge bg-danger">'.$data->note.'</span>';
+                return '<span class="text-truncate w-100">'.$data->note.'</span>';
             })
             ->editColumn("transaction", function ($data) {
                 $html = "";

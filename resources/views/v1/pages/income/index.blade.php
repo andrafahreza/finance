@@ -158,11 +158,13 @@
             },
             {
                 data: 'income',
-                name: 'income'
+                name: 'income',
+                orderable: false,
             },
             {
                 data: 'date',
-                name: 'date'
+                name: 'date',
+                orderable: false,
             },
             {
                 data: 'action',

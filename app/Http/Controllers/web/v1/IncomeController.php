@@ -47,13 +47,13 @@ class IncomeController extends Controller
         return DataTables::of($data)
             ->editColumn("source", function ($data) {
                 if ($data->source) {
-                    return '<span class="text-truncate w-100">'.$data->source->name."</span>";
+                    return '<span class="badge bg-success">'.$data->source->name."</span>";
                 }
 
                 return "Transfer";
             })
             ->editColumn("note", function ($data) {
-                return '<span class="badge bg-success">'.$data->note.'</span>';
+                return '<span class="text-truncate w-100">'.$data->note.'</span>';
             })
             ->editColumn("income", function ($data) {
                 $html = "";

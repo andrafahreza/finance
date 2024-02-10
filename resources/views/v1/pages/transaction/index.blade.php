@@ -171,11 +171,13 @@
             },
             {
                 data: 'transaction',
-                name: 'transaction'
+                name: 'transaction',
+                orderable: false,
             },
             {
                 data: 'date',
-                name: 'date'
+                name: 'date',
+                orderable: false,
             },
             {
                 data: 'action',

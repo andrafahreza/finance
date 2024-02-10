@@ -26,15 +26,15 @@
 
 
         <!-- [ Main Content ] start -->
-        {{-- <div class="row">
+        <div class="row">
             <div class="col-md-6 col-xxl-3">
                 <div class="card">
                     <div class="card-body">
                         <div class="row align-items-center">
                             <div class="col-9">
-                                <h6 class="mb-2 f-w-400 text-muted">Total Transferan Bulan Ini</h6>
-                                <h4 class="mb-3">Rp. {{ number_format(500000) }} <span class="badge bg-light-success border border-success"><i class="ti ti-trending-up"></i> 70.5%</span></h4>
-                                <p class="mb-0 text-muted text-sm">Kamu mendapatkan <span class="text-success">Rp. {{ number_format(5000) }}</span> lebih bulan ini</p>
+                                <h6 class="mb-2 f-w-400 text-muted">Total Pemasukan Bulan Ini</h6>
+                                <h4 class="mb-3">{{ $data['income']['total'] }} <span class="badge bg-light-success border border-success"><i class="ti ti-trending-up"></i> {{ $data['income']['percentage'] }}%</span></h4>
+                                <p class="mb-0 text-muted text-sm">Kamu mendapatkan <span class="text-success">{{ $data['income']['comparePast'] }}</span> lebih bulan ini</p>
                             </div>
                             <div class="col-3 text-end">
                                 <i class="ti ti-currency-dollar text-success f-36"></i>
@@ -49,8 +49,8 @@
                         <div class="row align-items-center">
                             <div class="col-9">
                                 <h6 class="mb-2 f-w-400 text-muted">Total Pengeluaran Bulan Ini</h6>
-                                <h4 class="mb-3">Rp. {{ number_format(500000) }} <span class="badge bg-light-primary border border-primary"> 70.5%</span></h4>
-                                <p class="mb-0 text-muted text-sm">Kamu masih menghemat <span class="text-success">Rp. {{ number_format(120000) }}</span> bulan ini</p>
+                                <h4 class="mb-3">{{ $data['transaction']['total'] }} <span class="badge bg-light-primary border border-primary"> {{ $data['transaction']['comparePast'] }}%</span></h4>
+                                <p class="mb-0 text-muted text-sm">Kamu menghemat <span class="text-success">{{ $data['transaction']['percentage'] }}</span> bulan ini</p>
                             </div>
                             <div class="col-3 text-end">
                                 <i class="ti ti-trending-up text-danger f-36"></i>
@@ -65,8 +65,8 @@
                         <div class="row align-items-center">
                             <div class="col-9">
                                 <h6 class="mb-2 f-w-400 text-muted">Pengeluaran Terbesar Bulan Ini</h6>
-                                <h4 class="mb-3">Rp. {{ number_format(500000) }} <span class="badge bg-light-primary border border-primary"> 70.5%</span></h4>
-                                <p class="mb-0 text-muted text-sm">Pengeluaran terbsear kamu dibulan ini adalah </p>
+                                <h4 class="mb-3">Rp. {{ number_format($data['biggestTransaction']->value) }}</h4>
+                                <p class="mb-0 text-muted text-sm">Pengeluaran terbsear kamu dibulan ini adalah {{ $data['biggestTransaction']->note }}</p>
                             </div>
                             <div class="col-3 text-end">
                                 <i class="ti ti-chart-bar text-primary f-36"></i>
@@ -224,7 +224,7 @@
                     </div>
                 </div>
             </div>
-        </div> --}}
+        </div>
         <!-- [ Main Content ] end -->
     </div>
 </div>
