@@ -27,7 +27,7 @@ class HomeController extends Controller
         $income = [
             "total" => "Rp. ". number_format($getIncome),
             "comparePast" => "Rp. ". number_format($getCompareIncome),
-            "percentage" => ($getCompareIncome) / ($getIncome) * 1
+            "percentage" => $getCompareIncome != 0 ? ($getCompareIncome) / ($getIncome) * 1 : 0
         ];
 
         // ===================== Transaction ==============
@@ -46,7 +46,7 @@ class HomeController extends Controller
         $transaction = [
             "total" => "Rp. ". number_format($getTransaction),
             "comparePast" => "Rp. ". number_format($getCompareTransaction),
-            "percentage" => ($getCompareTransaction) / ($getTransaction) * 1
+            "percentage" => $getCompareTransaction != 0 ? ($getCompareTransaction) / ($getTransaction) * 1 : 0
         ];
 
 
