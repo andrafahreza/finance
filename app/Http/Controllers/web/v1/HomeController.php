@@ -32,8 +32,6 @@ class HomeController extends Controller
 
         // ===================== Transaction ==============
         $dataTransaction = Transaction::where('id_user', $user->id)->whereMonth('date', date('m'));
-
-
         $getTransaction = $dataTransaction->sum('value');
         $getTransactionPast = Transaction::where('id_user', $user->id)->whereMonth('date', (date('m') - 1))->sum('value');
         $getCompareTransaction = 0;
@@ -51,7 +49,7 @@ class HomeController extends Controller
         ];
 
         // ========== Payment History ==================
-        $historyPayment = Transaction::where('id_user', $user->id)->whereMonth('date', date('m'))->orderBy('date', 'desc')->limit(3)->get();
+        $historyPayment = Transaction::where('id_user', $user->id)->whereMonth('date', date('m'))->orderBy('date', 'desc')->limit(5)->get();
 
         $data = [
             "income" => $income,
@@ -60,10 +58,31 @@ class HomeController extends Controller
             "historyPayment" => $historyPayment
         ];
 
+        $income = array();
+        $transaction = array();
+        $month = array();
+        foreach ($this->month() as $key => $value) {
+            $getIncome = (int)Income::where('id_user', $user->id)->whereMonth('date', $key + 1)->sum('value');
+            $getTransaction = (int)Transaction::where('id_user', $user->id)->whereMonth('date', $key + 1)->sum('value');
+            if ($getIncome == 0 && $getTransaction == 0) {
+                continue;
+            }
+
+            $income[] = $getIncome;
+            $transaction[] = $getTransaction;
+            array_push($month, substr($value, 0, 3));
+        }
+
+        $income = json_encode($income);
+        $transaction = json_encode($transaction);
+        $month = json_encode($month);
 
         return view('v1.pages.home', compact([
             "title",
-            "data"
+            "data",
+            "income",
+            "transaction",
+            "month"
         ]));
     }
 
