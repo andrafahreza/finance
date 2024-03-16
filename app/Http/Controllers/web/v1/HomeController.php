@@ -42,10 +42,15 @@ class HomeController extends Controller
 
         $biggestTransaction = $dataTransaction->orderBy('value', 'desc')->first();
 
+        $percentage = 0;
+        if ($getCompareTransaction > 0 && $getTransaction > 0) {
+            $percentage = ($getCompareTransaction) / ($getTransaction) * 100;
+        }
+
         $transaction = [
             "total" => "Rp. ". number_format($getTransaction),
             "comparePast" => "Rp. ". number_format($getCompareTransaction),
-            "percentage" => $getCompareTransaction > 0 ? ($getCompareTransaction) / ($getTransaction) * 100 : 0
+            "percentage" => $percentage
         ];
 
         // ========== Payment History ==================
