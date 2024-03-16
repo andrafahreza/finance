@@ -46,7 +46,6 @@ class HomeController extends Controller
         if ($getCompareTransaction > 0 && $getTransaction > 0) {
             $percentage = ($getCompareTransaction) / ($getTransaction) * 100;
         }
-        dd($percentage);
 
         $transaction = [
             "total" => "Rp. ". number_format($getTransaction),
@@ -82,6 +81,8 @@ class HomeController extends Controller
         $income = json_encode($income);
         $transaction = json_encode($transaction);
         $month = json_encode($month);
+
+        dd($data);
 
         return view('v1.pages.home', compact([
             "title",
