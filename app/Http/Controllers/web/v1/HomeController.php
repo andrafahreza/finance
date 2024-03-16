@@ -18,7 +18,7 @@ class HomeController extends Controller
         //  ======================= Income =================
         $getIncome = Income::where('id_user', $user->id)->whereMonth('date', date('m'))->sum('value');
         $getIncomePast = Income::where('id_user', $user->id)->whereMonth('date', (date('m') - 1))->sum('value');
-        $getCompareIncome = $getIncome > 0 ? $getIncome - $getIncomePast : 0;
+        $getCompareIncome = $getIncome - $getIncomePast;
 
         if ($getIncomePast < $getIncome) {
             $getCompareIncome = 0;
