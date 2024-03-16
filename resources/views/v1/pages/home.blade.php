@@ -56,9 +56,9 @@
                                     <h6 class="mb-2 f-w-400 text-muted">Total Pengeluaran Bulan Ini</h6>
                                     <h4 class="mb-3">{{ $data['transaction']['total'] }} <span
                                             class="badge bg-light-primary border border-primary">
-                                            {{ $data['transaction']['percentage'] }}%</span></h4>
+                                            {{ round($data['transaction']['percentage'], 1) }}%</span></h4>
                                     <p class="mb-0 text-muted text-sm">Kamu menghemat <span
-                                            class="text-success">{{ round($data['transaction']['comparePast'], 1) }}</span>
+                                            class="text-success">{{ $data['transaction']['comparePast'] }}</span>
                                         bulan ini</p>
                                 </div>
                                 <div class="col-3 text-end">
