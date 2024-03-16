@@ -18,7 +18,7 @@ class HomeController extends Controller
         //  ======================= Income =================
         $getIncome = Income::where('id_user', $user->id)->whereMonth('date', date('m'))->sum('value');
         $getIncomePast = Income::where('id_user', $user->id)->whereMonth('date', (date('m') - 1))->sum('value');
-        $getCompareIncome = $getIncome - $getIncomePast;
+        $getCompareIncome = $getIncome > 0 ? $getIncome - $getIncomePast : 0;
 
         if ($getIncomePast < $getIncome) {
             $getCompareIncome = 0;
@@ -81,8 +81,6 @@ class HomeController extends Controller
         $income = json_encode($income);
         $transaction = json_encode($transaction);
         $month = json_encode($month);
-
-        dd($data);
 
         return view('v1.pages.home', compact([
             "title",
