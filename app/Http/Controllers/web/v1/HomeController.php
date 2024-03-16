@@ -45,7 +45,7 @@ class HomeController extends Controller
         $transaction = [
             "total" => "Rp. ". number_format($getTransaction),
             "comparePast" => "Rp. ". number_format($getCompareTransaction),
-            "percentage" => $getCompareTransaction != 0 ? ($getCompareTransaction) / ($getTransaction) * 100 : 0
+            "percentage" => $getCompareTransaction > 0 ? ($getCompareTransaction) / ($getTransaction) * 100 : 0
         ];
 
         // ========== Payment History ==================
