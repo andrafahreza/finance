@@ -45,8 +45,8 @@ class HomeController extends Controller
         $percentage = 0;
         if ($getCompareTransaction > 0 && $getTransaction > 0) {
             $percentage = ($getCompareTransaction) / ($getTransaction) * 100;
-            dd($percentage);
         }
+        dd($percentage);
 
         $transaction = [
             "total" => "Rp. ". number_format($getTransaction),
